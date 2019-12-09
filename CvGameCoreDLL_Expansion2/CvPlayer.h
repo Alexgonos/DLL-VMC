@@ -599,6 +599,10 @@ public:
 	void SetAlwaysSeeBarbCampsCount(int iValue);
 	void ChangeAlwaysSeeBarbCampsCount(int iChange);
 
+	bool IsHasCheapExpand() const;
+	//void SetHasCheapExpandCount(int iValue);
+	void ChangeHasCheapExpandCount(int iChange);
+
 #if defined(MOD_API_EXTENSIONS)
 	bool grantPolicy(PolicyTypes iPolicy, bool bFree=false);
 	bool revokePolicy(PolicyTypes iPolicy);
@@ -1916,6 +1920,7 @@ protected:
 	FAutoVariable<int, CvPlayer> m_iAlwaysSeeBarbCampsCount;
 	FAutoVariable<int, CvPlayer> m_iHappinessFromBuildings;
 	FAutoVariable<int, CvPlayer> m_iHappinessPerCity;
+	FAutoVariable<int, CvPlayer> m_iHasCheapExpandCount;
 	int m_iHappinessPerXPolicies;
 	int m_iEspionageModifier;
 	int m_iSpyStartingRank;

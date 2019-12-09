@@ -168,6 +168,7 @@ CvPolicyEntry::CvPolicyEntry(void):
 	m_bRevealAllCapitals(false),
 	m_bGarrisonFreeMaintenance(false),
 	m_bAbleToAnnexCityStates(false),
+	m_bHasCheapExpand(false),
 #if defined(MOD_BUGFIX_DUMMY_POLICIES)
 	m_bDummy(false),
 #endif
@@ -427,6 +428,7 @@ bool CvPolicyEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility&
 	m_bEnablesSSPartHurry = kResults.GetBool("EnablesSSPartHurry");
 	m_bEnablesSSPartPurchase = kResults.GetBool("EnablesSSPartPurchase");
 	m_bAbleToAnnexCityStates = kResults.GetBool("AbleToAnnexCityStates");
+	m_bHasCheapExpand = kResults.GetBool("HasCheapExpand");
 #if defined(MOD_BUGFIX_DUMMY_POLICIES)
 	if (MOD_BUGFIX_DUMMY_POLICIES) {
 		m_bDummy = kResults.GetBool("Dummy");
@@ -1780,6 +1782,11 @@ bool CvPolicyEntry::IsEnablesSSPartPurchase() const
 bool CvPolicyEntry::IsAbleToAnnexCityStates() const
 {
 	return m_bAbleToAnnexCityStates;
+}
+
+bool CvPolicyEntry::HasCheapExpand() const
+{
+	return m_bHasCheapExpand;
 }
 
 #if defined(MOD_BUGFIX_DUMMY_POLICIES)

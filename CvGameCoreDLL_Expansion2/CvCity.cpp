@@ -4760,10 +4760,26 @@ int CvCity::getProductionNeeded(UnitTypes eUnit) const
 }
 
 //	--------------------------------------------------------------------------------
+bool CvCity::checkHasCheapExpand(BuildingTypes eBuilding) const {
+	if (GET_PLAYER(getOwner()).IsHasCheapExpand()) {
+		CvBuildingEntry* thisBuildingEntry = GC.getBuildingInfo(eBuilding);
+		const CvBuildingClassInfo& kBuildingClassInfo = thisBuildingEntry->GetBuildingClassInfo();
+		bool isWonder = isWorldWonderClass(kBuildingClassInfo) || isTeamWonderClass(kBuildingClassInfo) || isNationalWonderClass(kBuildingClassInfo);
+
+		return (!isWonder && GetCityBuildings()->GetNumBuildings() < 2);
+	}
+
+	return false;
+}
+
 int CvCity::getProductionNeeded(BuildingTypes eBuilding) const
 {
 	VALIDATE_OBJECT
 	int iNumProductionNeeded = GET_PLAYER(getOwner()).getProductionNeeded(eBuilding);
+
+	/* HasCheapExpand: First 2 buildings in each city get a 25% production discount. Wonders excluded from discount. */
+	if (checkHasCheapExpand(eBuilding))
+		iNumProductionNeeded = (iNumProductionNeeded*(100-25))/100;
 
 	return iNumProductionNeeded;
 }
@@ -5738,6 +5754,11 @@ int CvCity::getProductionModifier(BuildingTypes eBuilding, CvString* toolTipSink
 			GC.getGame().BuildProdModHelpText(toolTipSink, "TXT_KEY_PRODMOD_CAPITAL_BUILDING_TRAIT", iTempMod);
 		}
 	}
+
+	// HasCheapExpand
+	iTempMod = checkHasCheapExpand(eBuilding);
+	if (iTempMod && toolTipSink)
+		GC.getGame().BuildProdModHelpText(toolTipSink, "TXT_KEY_HAS_CHEAP_EXPAND", iTempMod);
 
 	return iMultiplier;
 }

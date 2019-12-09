@@ -179,6 +179,7 @@ public:
 	bool IsEnablesSSPartHurry() const;
 	bool IsEnablesSSPartPurchase() const;
 	bool IsAbleToAnnexCityStates() const;
+	bool HasCheapExpand() const;
 	std::string pyGetWeLoveTheKing()
 	{
 		return GetWeLoveTheKing();
@@ -411,6 +412,7 @@ private:
 	bool m_bEnablesSSPartHurry;
 	bool m_bEnablesSSPartPurchase;
 	bool m_bAbleToAnnexCityStates;
+	bool m_bHasCheapExpand;
 
 #if defined(MOD_BUGFIX_DUMMY_POLICIES)
 	bool m_bDummy;

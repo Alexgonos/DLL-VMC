@@ -175,6 +175,7 @@ CvPlayer::CvPlayer() :
 	, m_iUnitUpgradeCostMod("CvPlayer::m_iUnitUpgradeCostMod", m_syncArchive)
 	, m_iBarbarianCombatBonus("CvPlayer::m_iBarbarianCombatBonus", m_syncArchive)
 	, m_iAlwaysSeeBarbCampsCount("CvPlayer::m_iAlwaysSeeBarbCampsCount", m_syncArchive)
+	, m_iHasCheapExpandCount("CvPlayer::m_iHasCheapExpandCount", m_syncArchive)
 	, m_iHappinessFromBuildings("CvPlayer::m_iHappinessFromBuildings", m_syncArchive)
 	, m_iHappinessPerCity("CvPlayer::m_iHappinessPerCity", m_syncArchive)
 	, m_iHappinessPerXPolicies(0)
@@ -870,6 +871,7 @@ void CvPlayer::uninit()
 	m_iUnitUpgradeCostMod = 0;
 	m_iBarbarianCombatBonus = 0;
 	m_iAlwaysSeeBarbCampsCount = 0;
+	m_iHasCheapExpandCount = 0;
 	m_iHappinessFromBuildings = 0;
 	m_iHappinessPerCity = 0;
 	m_iHappinessPerXPolicies = 0;
@@ -13213,6 +13215,12 @@ bool CvPlayer::IsAlwaysSeeBarbCamps() const
 }
 
 //	--------------------------------------------------------------------------------
+bool CvPlayer::IsHasCheapExpand() const
+{
+	return m_iHasCheapExpandCount > 0;
+}
+
+//	--------------------------------------------------------------------------------
 /// Sets if we always see where Barb Camps appear
 void CvPlayer::SetAlwaysSeeBarbCampsCount(int iValue)
 {
@@ -13224,6 +13232,12 @@ void CvPlayer::SetAlwaysSeeBarbCampsCount(int iValue)
 void CvPlayer::ChangeAlwaysSeeBarbCampsCount(int iChange)
 {
 	SetAlwaysSeeBarbCampsCount(m_iAlwaysSeeBarbCampsCount + iChange);
+}
+
+//	--------------------------------------------------------------------------------
+void CvPlayer::ChangeHasCheapExpandCount(int iChange)
+{
+	m_iHasCheapExpandCount += iChange;
 }
 
 //	--------------------------------------------------------------------------------
@@ -23655,6 +23669,8 @@ void CvPlayer::processPolicies(PolicyTypes ePolicy, int iChange)
 	ChangeStrategicResourceMod(pPolicy->GetStrategicResourceMod() * iChange);
 	ChangeAbleToAnnexCityStatesCount((pPolicy->IsAbleToAnnexCityStates()) ? iChange : 0);
 
+	ChangeHasCheapExpandCount(pPolicy->HasCheapExpand() * iChange);
+
 	if(pPolicy->IsOneShot())
 	{
 		if(m_pPlayerPolicies->HasOneShotPolicyFired(ePolicy))
@@ -24727,6 +24743,7 @@ void CvPlayer::Read(FDataStream& kStream)
 	kStream >> m_iUnitUpgradeCostMod;
 	kStream >> m_iBarbarianCombatBonus;
 	kStream >> m_iAlwaysSeeBarbCampsCount;
+	kStream >> m_iHasCheapExpandCount;
 	kStream >> m_iHappinessFromBuildings;
 	kStream >> m_iHappinessPerCity;
 	kStream >> m_iAdvancedStartPoints;
@@ -25350,6 +25367,7 @@ void CvPlayer::Write(FDataStream& kStream) const
 	kStream << m_iUnitUpgradeCostMod;
 	kStream << m_iBarbarianCombatBonus;
 	kStream << m_iAlwaysSeeBarbCampsCount;
+	kStream << m_iHasCheapExpandCount;
 	kStream << m_iHappinessFromBuildings;
 	kStream << m_iHappinessPerCity;
 	kStream << m_iAdvancedStartPoints;

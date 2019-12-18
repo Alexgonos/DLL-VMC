@@ -7199,10 +7199,32 @@ void CvTeam::SetCurrentEra(EraTypes eNewValue)
 			CvPlayerAI& kPlayer = GET_PLAYER(ePlayer);
 			if(kPlayer.isAlive() && kPlayer.getTeam() == GetID() && !kPlayer.isMinorCiv() && !kPlayer.isBarbarian())
 			{
-				int iNumFreePolicies = kPlayer.GetPlayerTraits()->GetFreeSocialPoliciesPerEra() > 0;
-				if (iNumFreePolicies > 0)
+				bool bFreePolicy = kPlayer.GetPlayerTraits()->GetFreeSocialPoliciesPerEra() > 0;
+				if (bFreePolicy)
 				{
-					kPlayer.ChangeNumFreePolicies(iNumFreePolicies);
+					//kPlayer.ChangeNumFreePolicies(1);
+
+					// PERSONAL TODO: Poland UA change, gives culture for past X turns as if writer was bulb'd.
+					// Only spot where GetFreeSocialPoliciesPerEra() is used so for now I'll just override existing instead of adding more vars.
+
+					// Based on getGivePoliciesCulture() and givePolicies() from units
+					int iCultureBonus = 0;
+					CvUnitEntry* pInfo = GC.getUnitInfo((UnitTypes)GC.getInfoTypeForString("UNIT_WRITER"));
+
+					// Culture boost based on previous turns
+					int iPreviousTurnsToCount = pInfo->GetBaseCultureTurnsToCount();
+					if (iPreviousTurnsToCount != 0)
+						iCultureBonus = kPlayer.GetCultureYieldFromPreviousTurns(GC.getGame().getGameTurn(), iPreviousTurnsToCount);
+
+					// Modify based on game speed
+					iCultureBonus *= GC.getGame().getGameSpeedInfo().getCulturePercent();
+					iCultureBonus /= 100;
+
+					CUSTOMLOG("POLAND UA: %i %i", iPreviousTurnsToCount, iCultureBonus);
+
+					// Grant the culture boost
+					if (iCultureBonus != 0)
+						kPlayer.changeJONSCulture(iCultureBonus);
 				}
 			}
 		}

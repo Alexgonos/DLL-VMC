@@ -113,6 +113,7 @@ public:
 	int GetRazeSpeedModifier() const;
 	int GetDOFGreatPersonModifier() const;
 	int GetLuxuryHappinessRetention() const;
+	int GetExtraHappinessPerLuxury() const;
 #if defined(MOD_TRAITS_EXTRA_SUPPLY)
 	int GetExtraSupply() const;
 	int GetExtraSupplyPerCity() const;
@@ -301,6 +302,7 @@ protected:
 	int m_iRazeSpeedModifier;
 	int m_iDOFGreatPersonModifier;
 	int m_iLuxuryHappinessRetention;
+	int m_iExtraHappinessPerLuxury;
 #if defined(MOD_TRAITS_EXTRA_SUPPLY)
 	int m_iExtraSupply;
 	int m_iExtraSupplyPerCity;
@@ -680,6 +682,10 @@ public:
 	{
 		return m_iLuxuryHappinessRetention;
 	};
+	int GetExtraHappinessPerLuxury() const
+	{
+		return m_iExtraHappinessPerLuxury;
+	};
 #if defined(MOD_TRAITS_EXTRA_SUPPLY)
 	int GetExtraSupply() const
 	{
@@ -1052,6 +1058,7 @@ private:
 	int m_iRazeSpeedModifier;
 	int m_iDOFGreatPersonModifier;
 	int m_iLuxuryHappinessRetention;
+	int m_iExtraHappinessPerLuxury;
 #if defined(MOD_TRAITS_EXTRA_SUPPLY)
 	int m_iExtraSupply;
 	int m_iExtraSupplyPerCity;

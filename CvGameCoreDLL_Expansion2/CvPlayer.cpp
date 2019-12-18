@@ -12308,7 +12308,7 @@ int CvPlayer::GetHappinessFromLuxury(ResourceTypes eResource) const
 		// Any extras?
 		else if(getNumResourceAvailable(eResource, /*bIncludeImport*/ true) > 0)
 		{
-			return iBaseHappiness;
+			return iBaseHappiness + GetPlayerTraits()->GetExtraHappinessPerLuxury();
 		}
 
 		else if(GetPlayerTraits()->GetLuxuryHappinessRetention() > 0)

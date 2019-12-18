@@ -86,6 +86,7 @@ CvTraitEntry::CvTraitEntry() :
 	m_iRazeSpeedModifier(0),
 	m_iDOFGreatPersonModifier(0),
 	m_iLuxuryHappinessRetention(0),
+	m_iExtraHappinessPerLuxury(0),
 #if defined(MOD_TRAITS_EXTRA_SUPPLY)
 	m_iExtraSupply(0),
 	m_iExtraSupplyPerCity(0),
@@ -529,6 +530,12 @@ int CvTraitEntry::GetNavalUnitMaintenanceModifier() const
 int CvTraitEntry::GetLuxuryHappinessRetention() const
 {
 	return m_iLuxuryHappinessRetention;
+}
+
+/// Accessor: Extra happiness per unique luxery
+int CvTraitEntry::GetExtraHappinessPerLuxury() const
+{
+	return m_iExtraHappinessPerLuxury;
 }
 
 #if defined(MOD_TRAITS_EXTRA_SUPPLY)
@@ -1266,6 +1273,7 @@ bool CvTraitEntry::CacheResults(Database::Results& kResults, CvDatabaseUtility& 
 	m_iRazeSpeedModifier					= kResults.GetInt("RazeSpeedModifier");
 	m_iDOFGreatPersonModifier				= kResults.GetInt("DOFGreatPersonModifier");
 	m_iLuxuryHappinessRetention				= kResults.GetInt("LuxuryHappinessRetention");
+	m_iExtraHappinessPerLuxury				= kResults.GetInt("ExtraHappinessPerLuxury");
 #if defined(MOD_TRAITS_EXTRA_SUPPLY)
 	if (MOD_TRAITS_EXTRA_SUPPLY) {
 		m_iExtraSupply						= kResults.GetInt("ExtraSupply");
@@ -1997,6 +2005,7 @@ void CvPlayerTraits::InitPlayerTraits()
 			m_iRazeSpeedModifier += trait->GetRazeSpeedModifier();
 			m_iDOFGreatPersonModifier += trait->GetDOFGreatPersonModifier();
 			m_iLuxuryHappinessRetention += trait->GetLuxuryHappinessRetention();
+			m_iExtraHappinessPerLuxury += trait->GetExtraHappinessPerLuxury();
 #if defined(MOD_TRAITS_EXTRA_SUPPLY)
 			m_iExtraSupply += trait->GetExtraSupply();
 			m_iExtraSupplyPerCity += trait->GetExtraSupplyPerCity();
@@ -2409,6 +2418,7 @@ void CvPlayerTraits::Reset()
 	m_iRazeSpeedModifier = 0;
 	m_iDOFGreatPersonModifier = 0;
 	m_iLuxuryHappinessRetention = 0;
+	m_iExtraHappinessPerLuxury = 0;
 #if defined(MOD_TRAITS_EXTRA_SUPPLY)
 	m_iExtraSupply = 0;
 	m_iExtraSupplyPerCity = 0;
@@ -3688,6 +3698,7 @@ void CvPlayerTraits::Read(FDataStream& kStream)
 	kStream >> m_iDOFGreatPersonModifier;
 
 	kStream >> m_iLuxuryHappinessRetention;
+	MOD_SERIALIZE_READ(95, kStream, m_iExtraHappinessPerLuxury, 0);
 
 #if defined(MOD_TRAITS_EXTRA_SUPPLY)
 	MOD_SERIALIZE_READ(78, kStream, m_iExtraSupply, 0);
@@ -4095,6 +4106,7 @@ void CvPlayerTraits::Write(FDataStream& kStream)
 	kStream << m_iRazeSpeedModifier;
 	kStream << m_iDOFGreatPersonModifier;
 	kStream << m_iLuxuryHappinessRetention;
+	MOD_SERIALIZE_WRITE(kStream, m_iExtraHappinessPerLuxury);
 #if defined(MOD_TRAITS_EXTRA_SUPPLY)
 	MOD_SERIALIZE_WRITE(kStream, m_iExtraSupply);
 	MOD_SERIALIZE_WRITE(kStream, m_iExtraSupplyPerCity);

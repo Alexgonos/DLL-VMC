@@ -966,7 +966,7 @@ GameEvents.WorldTurnEnd.Add( OnWorldTurnEnd );
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 function SendModInstalledMessage()
-	local text = "<This bro is using Vanilla+>"
+	local text = "<TLAST TEST PLEASE DONT DESYNC>"
 	Network.SendChat( text, -1, -1 );
 end
 Events.LoadScreenClose.Add(SendModInstalledMessage);

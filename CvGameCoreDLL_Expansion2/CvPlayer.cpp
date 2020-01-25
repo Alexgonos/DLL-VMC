@@ -13942,22 +13942,16 @@ void CvPlayer::incrementGreatScientistsCreated(bool bIsFree)
 //	--------------------------------------------------------------------------------
 int CvPlayer::getGreatEngineersCreated(bool bExcludeFree) const
 {
-	/* PERSONAL EDIT: For now, only Merchant is on separate counter.
 	int iCount = m_iGreatEngineersCreated;
 	if (bExcludeFree) iCount -= m_iFreeGreatEngineersCreated;
 	return iCount;
-	*/
-	return getGreatScientistsCreated(bExcludeFree);
 }
 
 //	--------------------------------------------------------------------------------
 void CvPlayer::incrementGreatEngineersCreated(bool bIsFree)
 {
-	/* PERSONAL EDIT: For now, only Merchant is on separate counter.
 	m_iGreatEngineersCreated++;
 	if (bIsFree) m_iFreeGreatEngineersCreated++;
-	*/
-	incrementGreatScientistsCreated(bIsFree);
 }
 #endif
 

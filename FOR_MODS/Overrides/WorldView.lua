@@ -966,7 +966,7 @@ GameEvents.WorldTurnEnd.Add( OnWorldTurnEnd );
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 function SendModInstalledMessage()
-	local text = "<TLAST TEST PLEASE DONT DESYNC>"
+	local text = "<YET ANOTHER test for desync.>"
 	Network.SendChat( text, -1, -1 );
 end
 Events.LoadScreenClose.Add(SendModInstalledMessage);

@@ -13942,16 +13942,13 @@ void CvPlayer::incrementGreatScientistsCreated(bool bIsFree)
 //	--------------------------------------------------------------------------------
 int CvPlayer::getGreatEngineersCreated(bool bExcludeFree) const
 {
-	int iCount = m_iGreatEngineersCreated;
-	if (bExcludeFree) iCount -= m_iFreeGreatEngineersCreated;
-	return iCount;
+	return getGreatScientistsCreated(bExcludeFree);
 }
 
 //	--------------------------------------------------------------------------------
 void CvPlayer::incrementGreatEngineersCreated(bool bIsFree)
 {
-	m_iGreatEngineersCreated++;
-	if (bIsFree) m_iFreeGreatEngineersCreated++;
+	incrementGreatScientistsCreated(bIsFree);
 }
 #endif
 
@@ -14065,13 +14062,13 @@ void CvPlayer::incrementGreatScientistsCreated()
 //	--------------------------------------------------------------------------------
 int CvPlayer::getGreatEngineersCreated() const
 {
-	return m_iGreatEngineersCreated;
+	return getGreatScientistsCreated();
 }
 
 //	--------------------------------------------------------------------------------
 void CvPlayer::incrementGreatEngineersCreated()
 {
-	m_iGreatEngineersCreated++;
+	incrementGreatScientistsCreated();
 }
 #endif
 
